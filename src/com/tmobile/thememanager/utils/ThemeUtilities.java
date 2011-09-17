@@ -62,6 +62,30 @@ public class ThemeUtilities {
         /* Trigger a configuration change so that all apps will update their UI.  This will also
          * persist the theme for us across reboots. */
         updateConfiguration(context, theme);
+        
+    	boolean hasModdedBattery;
+    	boolean hasModdedSignal;
+        
+        try {
+        	hasModdedBattery = (theme.isThemeBatteryModded().equals("true"));
+        } catch (NullPointerException e){
+        	hasModdedBattery = false;
+        }
+        
+        try {
+            hasModdedSignal = (theme.isThemeSignalModded().equals("true"));
+	    } catch (NullPointerException e){
+	    	hasModdedSignal = false;
+	    }
+	    
+        String TAG = "ThemeManager";
+	    Log.d(TAG, "battery: " + hasModdedBattery);
+	    Log.d(TAG, "signal: " + hasModdedSignal);
+        Settings.System.putInt(context.getContentResolver(),
+        		Settings.System.THEME_COMPATIBILITY_SIGNAL, hasModdedBattery ? 1 : 0);
+        Settings.System.putInt(context.getContentResolver(),
+        		Settings.System.THEME_COMPATIBILITY_BATTERY, hasModdedSignal ? 1 : 0);
+        
     }
 
     /**
@@ -78,31 +102,11 @@ public class ThemeUtilities {
      */
     public static void applyTheme(Context context, ThemeItem theme, Intent request) {
     	
-    	boolean hasModdedBattery;
-    	boolean hasModdedSignal;
-    	
         String themeType = request.getType();
         boolean extendedThemeChange =
             request.getBooleanExtra(ThemeManager.EXTRA_EXTENDED_THEME_CHANGE, false);
         boolean dontSetLockWallpaper =
             request.getBooleanExtra(ThemeManager.EXTRA_DONT_SET_LOCK_WALLPAPER, false);
-        
-        try {
-        	hasModdedBattery = (theme.isThemeBatteryModded().equals("true"));
-        } catch (NullPointerException e){
-        	hasModdedBattery = false;
-        }
-        
-        try {
-            hasModdedSignal = (theme.isThemeSignalModded().equals("true"));
-	    } catch (NullPointerException e){
-	    	hasModdedSignal = false;
-	    }
-        
-        Settings.System.putInt(context.getContentResolver(),
-        		Settings.System.THEME_COMPATIBILITY_SIGNAL, hasModdedBattery ? 1 : 0);
-        Settings.System.putInt(context.getContentResolver(),
-        		Settings.System.THEME_COMPATIBILITY_BATTERY, hasModdedSignal ? 1 : 0);
         
         Uri wallpaperUri = null;
         Uri lockWallpaperUri = null;
