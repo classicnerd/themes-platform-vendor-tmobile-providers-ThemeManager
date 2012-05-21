@@ -82,10 +82,10 @@ public class ThemeUtilities {
 	    Log.d(TAG, "battery: " + hasModdedBattery);
 	    Log.d(TAG, "signal: " + hasModdedSignal);
         Settings.System.putInt(context.getContentResolver(),
-        		Settings.System.THEME_COMPATIBILITY_SIGNAL, hasModdedBattery ? 1 : 0);
+                Settings.System.THEME_COMPATIBILITY_SIGNAL, hasModdedSignal ? 1 : 0);
         Settings.System.putInt(context.getContentResolver(),
-        		Settings.System.THEME_COMPATIBILITY_BATTERY, hasModdedSignal ? 1 : 0);
-        
+                Settings.System.THEME_COMPATIBILITY_BATTERY, hasModdedBattery ? 1 : 0);
+
     }
 
     /**
