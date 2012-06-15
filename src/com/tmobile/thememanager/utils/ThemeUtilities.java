@@ -81,10 +81,6 @@ public class ThemeUtilities {
         String TAG = "ThemeManager";
 	    Log.d(TAG, "battery: " + hasModdedBattery);
 	    Log.d(TAG, "signal: " + hasModdedSignal);
-        Settings.System.putInt(context.getContentResolver(),
-                Settings.System.THEME_COMPATIBILITY_SIGNAL, hasModdedSignal ? 1 : 0);
-        Settings.System.putInt(context.getContentResolver(),
-                Settings.System.THEME_COMPATIBILITY_BATTERY, hasModdedBattery ? 1 : 0);
 
     }
 
@@ -225,3 +221,4 @@ public class ThemeUtilities {
         return true;
     }
 }
+
